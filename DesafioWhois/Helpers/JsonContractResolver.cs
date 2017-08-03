@@ -8,7 +8,7 @@ namespace DesafioWhois.Helpers
 {
     public class JsonContractResolver : DefaultContractResolver
     {
-        private Dictionary<string, string> Mapping { get; set; }
+        private Dictionary<string, string> Mapping { get; }
 
         public JsonContractResolver()
         {
@@ -28,15 +28,16 @@ namespace DesafioWhois.Helpers
                 {"Fone", "phone"},
                 {"Email", "email"},
                 {"EnderecoCompleto", "full_address"},
+                {"Registrado", "registered" }
             };
         }
 
         protected override string ResolvePropertyName(string nomePropriedade)
         {
-            string nome = null;
-            var resolved = Mapping.TryGetValue(nomePropriedade, out nome);
+            string nome;
+            var resolvido = Mapping.TryGetValue(nomePropriedade, out nome);
 
-            return (resolved) ? nome : base.ResolvePropertyName(nomePropriedade);
+            return resolvido ? nome : base.ResolvePropertyName(nomePropriedade);
         }
     }
 }

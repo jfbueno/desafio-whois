@@ -5,9 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Whois.NET</title>
     @Styles.Render("~/Content/css")
-
+    
     @Scripts.Render("~/bundles/angular")
+    <script type="text/javascript">
+        angular.module('whoisApp')
+            .constant('apiUrls', (function () {
+                return {
+                    busca: '@Url.Content("~/api/Buscar")',
+                    atualizarCache: '@Url.Content("~/api/AtualizarCache")'
+                }
+            })());
+    </script>
+    @Scripts.Render("~/bundles/angular-app")
 </head>
+
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -30,7 +41,7 @@
         @RenderBody()
         <hr />
         <footer class="pull-right">
-            <p>Desenvolvido com <span class="fa fa-heart"></span> por Jéferson.</p>
+            <p>Desenvolvido com <span class="fa fa-heart"></span> <a href="https://pt.stackoverflow.com/u/18246" target="blank">por Jéferson.</a></p>
         </footer>
     </div>
 

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Script.Serialization;
@@ -16,9 +17,9 @@ namespace DesafioWhois.Controllers.Api
 {
     public class BuscarController : ApiController
     {
-        private DominiosRepo _repoDominios = new DominiosRepo();
+        private readonly DominiosRepo _repoDominios = new DominiosRepo();
         
-        public async Task<RetornoDominio> Get([FromUri] string dominio)
+        public async Task<IHttpActionResult> Get([FromUri] string dominio)
         {
             var registroCacheado = await _repoDominios.BuscarPorDominio(dominio);            
             
@@ -31,15 +32,24 @@ namespace DesafioWhois.Controllers.Api
 
                 await _repoDominios.InserirAtualizar(model);
 
-                return new RetornoDominio { Dado = model, Cacheado = false };
+                return Ok(new RetornoDominio { Dado = model, Cacheado = false });
             }
 
-            return new RetornoDominio { Dado = registroCacheado, Cacheado = true };
+            return Ok(new RetornoDominio { Dado = registroCacheado, Cacheado = true });
         }
 
-        public async Task<Dominio> AtualizarCacheInterno()
+        [HttpPost, Route("api/AtualizarCache")]
+        public async Task<IHttpActionResult> AtualizarCache([FromUri] string idRegistro)
         {
-            return null;
+            var registro = await _repoDominios.BuscarPorId(idRegistro);
+
+            if (registro == null)
+                return NotFound();
+
+            Dominio model = await ApiWrapper.BuscarInformacoes(registro.NomeDominio);
+            await _repoDominios.InserirAtualizar(model, idRegistro);
+
+            return Ok(new RetornoDominio { Dado = model, Cacheado = false });
         }
     }
 }

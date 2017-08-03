@@ -14,11 +14,11 @@ namespace DesafioWhois.Models
         
         public string NomeDominio { get; set; }
                 
-        public DateTime DataCriacao { get; set; }
+        public DateTime? DataCriacao { get; set; }
         
-        public DateTime DataExpiracao { get; set; }
+        public DateTime? DataExpiracao { get; set; }
         
-        public DateTime DataAtualizacao { get; set; }
+        public DateTime? DataAtualizacao { get; set; }
         
         public IEnumerable<string> NameServers { get; set; }
         
@@ -29,6 +29,8 @@ namespace DesafioWhois.Models
         public IEnumerable<Contato> Contatos { get; set; }
 
         public DateTime ExpiracaoCacheInterno { get; set; }
+
+        public bool Registrado { get; set; }
 
         public bool CacheExpirado => DateTime.Today > ExpiracaoCacheInterno;
     }    

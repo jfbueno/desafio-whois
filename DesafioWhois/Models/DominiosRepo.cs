@@ -6,14 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using MongoDB.Bson;
 
 namespace DesafioWhois
 {
     public class DominiosRepo
     {
-        private IMongoClient _client = new MongoClient(MongoConfig.Url);
-        private IMongoDatabase _database;
-        private IMongoCollection<Dominio> _collection;
+        private readonly IMongoClient _client = new MongoClient(MongoConfig.Url);
+        private readonly IMongoDatabase _database;
+        private readonly IMongoCollection<Dominio> _collection;
 
         public DominiosRepo()
         {
@@ -26,15 +27,17 @@ namespace DesafioWhois
             return await _collection.Find(x => x.NomeDominio == url).FirstOrDefaultAsync();
         }
 
-        public async Task InserirAtualizar(Dominio dominio)
+        public async Task<Dominio> BuscarPorId(string id)
         {
-            dominio.ExpiracaoCacheInterno = DateTime.Now.AddDays(10);
-            await _collection.InsertOneAsync(dominio);
+            return await _collection.Find(x => x.Id == ObjectId.Parse(id)).FirstOrDefaultAsync();
         }
 
-        public async Task Atualizar()
+        public async Task InserirAtualizar(Dominio dominio, string id = null)
         {
-            //await _collection.UpdateOneAsync()
+            dominio.ExpiracaoCacheInterno = DateTime.Now.AddDays(10).Date;
+            dominio.Id = (id == null) ? new BsonObjectId(ObjectId.GenerateNewId()) : ObjectId.Parse(id);
+
+            await _collection.ReplaceOneAsync(doc => doc.Id == dominio.Id, dominio, new UpdateOptions { IsUpsert = true });
         }
     }
 }

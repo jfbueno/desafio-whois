@@ -5,76 +5,102 @@
 <h1>Whois.NET</h1>
 
 <div class="jumbotron" style="margin-top: 30px;" ng-controller="mainController as mainCtrl">
-    <h4>Digite o domínio que deseja buscar</h4>
+    <h4>Digite o domínio que deseja consultar</h4>
 
     <div class="row">
         <div class="col-md-12">
             <div class="form-inline">
                 <input ng-model="mainCtrl.urlBusca" ng-required="" class="form-control" type="text" />
                 <button ng-click="mainCtrl.buscar()" ng-disabled="!mainCtrl.urlBusca" class="btn btn-primary">
-                    Buscar
+                    Consultar
                 </button>
             </div>
 
             <div class="margin"></div>
 
+            <div class="alert alert-danger" ng-show="mainCtrl.erro" ng-init="mostrarErro = false" >
+                <strong>Ops!</strong> Parece que algo deu errado.<br/>
+                
+                <span style="cursor: pointer" ng-click="mostrarErro = !mostrarErro">
+                    Clique aqui para {{ mostrarErro ? 'esconder as' : 'ver mais' }} informações sobre o erro.
+                </span>
+                
+                <pre ng-show="mostrarErro">{{ mainCtrl.erro | json }}</pre>
+            </div>
+
             <div ng-show="mainCtrl.viewModel">
                 <p class="cache" ng-show="mainCtrl.viewModel.Cacheado">
                     Registro do cache interno
-                    <span class="fa fa-refresh" title="Buscar ignorando o cache interno"></span>
+                    <span class="fa fa-refresh" title="Atualizar cache interno" ng-click="mainCtrl.atualizarCache()"></span>
                 </p>
                 <div class="result-area">
                     <div>
-                        Domínio: {{mainCtrl.viewModel.Dado.NomeDominio}}
+                        <b>Domínio:</b> {{mainCtrl.viewModel.Dado.NomeDominio}}
                     </div>
                     <div>
-                        Data Criação: {{ mainCtrl.viewModel.Dado.DataCriacao | date: 'dd/MM/yyyy' }}
-                    </div>
-                    <div>
-                        Data Expiração: {{ mainCtrl.viewModel.Dado.DataExpiracao  | date: 'dd/MM/yyyy' }}
-                    </div>
-                    <div>
-                        Última Atualização: {{ mainCtrl.viewModel.Dado.DataAtualizacao  | date: 'dd/MM/yyyy' }}
+                        <b>Registrado:</b> {{ mainCtrl.viewModel.Dado.Registrado ? 'Sim' : 'Não' }}
                     </div>
 
-                    <strong>Emails:</strong>
-                    <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="email in mainCtrl.viewModel.Dado.Emails">
-                            {{email}}
-                        </li>
-                    </ul>
+                    <div ng-show="mainCtrl.viewModel.Dado.DataCriacao">
+                        <b>Data Criação:</b> {{ mainCtrl.viewModel.Dado.DataCriacao | date: 'dd/MM/yyyy' }}
+                    </div>
 
-                    <strong>NameServers:</strong>
-                    <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="server in mainCtrl.viewModel.Dado.NameServers">
-                            {{ server | lowercase }}
-                        </li>
-                    </ul>
+                    <div ng-show="mainCtrl.viewModel.Dado.DataExpiracao">
+                        <b>Data Expiração:</b> {{ mainCtrl.viewModel.Dado.DataExpiracao  | date: 'dd/MM/yyyy' }}
+                    </div>
 
-                    <strong>Contatos:</strong>
-                    <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="contato in mainCtrl.viewModel.Dado.Contatos">
-                            <div>
-                                <b>Nome: </b>{{ contato.Nome }}
-                            </div>
-                            <div>
-                                <b>Tipo: </b>{{ contato.Tipo }}
-                            </div>
+                    <div ng-show="mainCtrl.viewModel.Dado.DataAtualizacao">
+                        <b>Última Atualização:</b> {{ mainCtrl.viewModel.Dado.DataAtualizacao  | date: 'dd/MM/yyyy' }}
+                    </div>
 
-                            <div>
-                                <b>Organização: </b>{{ contato.Organizacao }}
-                            </div>
+                    <div ng-show="mainCtrl.viewModel.Dado.Emails && mainCtrl.viewModel.Dado.Emails.length > 0">
+                        <b>Emails:</b>
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="email in mainCtrl.viewModel.Dado.Emails">
+                                {{email}}
+                            </li>
+                        </ul>
+                    </div>
 
-                            <div>
-                                <b>Fone:</b> {{ contato.Fone }}
-                            </div>
+                    <div ng-show="mainCtrl.viewModel.Dado.NameServers && mainCtrl.viewModel.Dado.NameServers.length > 0">
+                        <b>NameServers:</b>
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="server in mainCtrl.viewModel.Dado.NameServers">
+                                {{ server | lowercase }}
+                            </li>
+                        </ul>
+                    </div>
 
-                            <div>
-                                <b>Email:</b> {{ contato.Email }}
-                            </div>
-                        </li>
-                    </ul>
+                    <div ng-show="mainCtrl.viewModel.Dado.Contatos && mainCtrl.viewModel.Dado.Contatos.length > 0">
+                        <b>Contatos:</b>
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="contato in mainCtrl.viewModel.Dado.Contatos">
+                                <div>
+                                    <b>Nome: </b>{{ contato.Nome }}
+                                </div>
+                                <div>
+                                    <b>Tipo: </b>{{ contato.Tipo }}
+                                </div>
 
+                                <div>
+                                    <b>Organização: </b>{{ contato.Organizacao }}
+                                </div>
+
+                                <div>
+                                    <b>Fone:</b> {{ contato.Fone }}
+                                </div>
+
+                                <div>
+                                    <b>Email:</b> {{ contato.Email }}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div ng-show="mainCtrl.viewModel.Dado.RawInfo">
+                        <b>Informações adicionais:</b>
+                        <pre>{{ mainCtrl.viewModel.Dado.RawInfo }}</pre>
+                    </div>
                 </div>
             </div>
         </div>

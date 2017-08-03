@@ -1,6 +1,7 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 80px;
     padding-bottom: 20px;
+    background-color: #fdfdfd;
 }
 
 .body-content {
@@ -10,6 +11,10 @@
 
 .dl-horizontal dt {
     white-space: normal;
+}
+
+a:hover {
+    text-decoration: none;
 }
 
 .jumbotron input {
@@ -36,7 +41,7 @@ footer p .fa {
 .result-area {
     border: 1px solid;
     border-color: darkgray;
-    min-height: 300px;
+    min-height: 150px;
     border-radius: 6px;
     font-size: 18px;
     padding: 10px 15px 10px 25px;
