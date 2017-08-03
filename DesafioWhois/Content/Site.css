@@ -1,0 +1,66 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.jumbotron input {
+    width: 75%;
+}
+
+.jumbotron button {
+    width: 24%;
+    height: 35px;
+}
+
+footer p{
+    font-size: 16px;
+}
+
+footer p .fa {
+    color: darkred;
+}
+
+.margin {
+    margin-top: 8px;
+}
+
+.result-area {
+    border: 1px solid;
+    border-color: darkgray;
+    min-height: 300px;
+    border-radius: 6px;
+    font-size: 18px;
+    padding: 10px 15px 10px 25px;
+}
+
+.cache {
+    color: gray;
+    margin-bottom: 0;
+    font-size: 12px;
+}
+
+.cache .fa {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.result-area div {
+    line-height: 38px;
+}
+
+.result-area li {
+    font-size: 15px;
+    padding: 0;
+    padding-left: 20px;
+}
+
+
