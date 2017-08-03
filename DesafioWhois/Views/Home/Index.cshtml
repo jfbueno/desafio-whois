@@ -8,23 +8,29 @@
     <h4>Digite o domínio que deseja consultar</h4>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
             <div class="form-inline">
                 <input ng-model="mainCtrl.urlBusca" ng-required="" class="form-control" type="text" />
-                <button ng-click="mainCtrl.buscar()" ng-disabled="!mainCtrl.urlBusca" class="btn btn-primary">
-                    Consultar
+                
+                <button ng-click="mainCtrl.buscar()" ng-disabled="!mainCtrl.urlBusca || mainCtrl.carregando" class="btn btn-primary">
+                    <span ng-show="mainCtrl.carregando">
+                        <i class="fa fa-spinner fa-spin"></i> Processando consulta
+                    </span>
+                    <span ng-show="!mainCtrl.carregando">
+                        Consultar
+                    </span>
                 </button>
             </div>
 
             <div class="margin"></div>
 
-            <div class="alert alert-danger" ng-show="mainCtrl.erro" ng-init="mostrarErro = false" >
-                <strong>Ops!</strong> Parece que algo deu errado.<br/>
-                
+            <div class="alert alert-danger" ng-show="mainCtrl.erro" ng-init="mostrarErro = false">
+                <strong>Ops!</strong> Parece que algo deu errado.<br />
+
                 <span style="cursor: pointer" ng-click="mostrarErro = !mostrarErro">
                     Clique aqui para {{ mostrarErro ? 'esconder as' : 'ver mais' }} informações sobre o erro.
                 </span>
-                
+
                 <pre ng-show="mostrarErro">{{ mainCtrl.erro | json }}</pre>
             </div>
 
