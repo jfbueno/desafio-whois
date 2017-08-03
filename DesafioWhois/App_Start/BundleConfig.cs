@@ -26,6 +26,7 @@ namespace DesafioWhois
                       "~/Content/font-awesome.css"));
             
             RegistrarAngular(bundles);
+            BundleTable.EnableOptimizations = false;
         }
 
         public static void RegistrarAngular(BundleCollection bundles)
@@ -38,8 +39,10 @@ namespace DesafioWhois
                                 .Include("~/Scripts/app/mainController.js")
                                 .Include("~/Scripts/app/whoisApiService.js");
 
+            appBundle.Transforms.Clear();
+
             //Adicionar o diretório de controllers/service se for necessário. Por enquanto só tem um controller
-            
+
             bundle.Orderer = new AsIsBundleOrderer();
             appBundle.Orderer = new AsIsBundleOrderer();
 
