@@ -1,12 +1,25 @@
 # Whois.NET
 
-# 1. Publicação local com o Visual Studio
+Esta aplicação tem como objetivo solucionar o problema do desafio para desenvolvedores.
 
-Para compilar e realizar o _deploy_ da aplicação são necessários as seguintes ferramentas
+Para facilitar os testes, eu mesmo fiz uma publicação dela, usando minha conta de estudante no Azure. Ela pode ser acessada pelo link [umbler-whoisapp.azurewebsites.net](https://umbler-whoisapp.azurewebsites.net).
+
+**Observação**: Como usei uma conta gratuita tanto para os servidor da aplicação quanto para o servidor do MongoDB, a aplicação pode apresentar algum _delay_. Principalmente no primeiro acesso.
+
+
+
+
+# Instruções de publicação
+
+Para rodar a aplicação são necessárias as seguintes ferramentas
 
  * IIS (Internet Information Services)
  * MongoDB
- * Visual Studio
+
+
+# 1. Publicação local com o Visual Studio 
+
+Compilar e realizar o _deploy_ da aplicação com o Visual Studio.
 
 ### Compilando
 
