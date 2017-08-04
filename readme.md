@@ -30,9 +30,9 @@ Esta aplicação é uma _Single Page Application_ construída com AngularJS que 
 
  * **`api/buscar/{dominio}`**: 
  
-      Busca informações sobre o domínio (enviado por parâmetro na URL, tanto _inline_ quanto por _query string_.   
-  
-     Exemplo de requisição: **`http://exemplo/api/buscar?dominio=umbler.com`** ou **`http://exemplo/api/buscar/umbler.com/`** (notar a barra no final).
+      Busca informações sobre o domínio (enviado por parâmetro na URL, tanto _inline_ quanto por _query string_.
+      
+      Exemplo de requisição: **`http://exemplo/api/buscar?dominio=umbler.com`** ou **`http://exemplo/api/buscar/umbler.com/`** (notar a barra no final).
    
  * **`api/atualizarcache/{idRegistro}`**:
 
