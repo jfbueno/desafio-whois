@@ -1,6 +1,85 @@
 # Whois.NET
 
-Esta aplicação tem como objetivo solucionar o problema do desafio para desenvolvedores.
+Esta aplicação foi desenvolvida para solucionar o problema do desafio para desenvolvedores.
+  
+### Funcionamento da aplicação
+
+A aplicação tem como principal objetivo buscar informações sobre domínios. Ao entrar com um domínio são buscadas as informações do mesmo usando a [**WhoAPI**](https://whoapi.com/).
+
+Os dados que já foram consultados são salvos como cache para que possam ser consultados com mais agilidade nas próximas consultas. Os registros de cache expiram em 10 dias, ou seja, 10 dias após consultar o domínio `exemplo.com` o registro salvo no cache interno será ignorado a aplicação buscará novamente os dados atualizados da API.
+
+### Tecnologias utilizadas
+
+ 1. Backend  
+     * C#
+     * ASP.NET MVC
+     * ASP.NET Web API
+     
+2. Frontend 
+    * JavaScript
+    * AngularJS
+
+3. Banco de dados de _caching_ 
+    * MongoDB
+
+### Construção da aplicação
+
+Esta aplicação é uma _Single Page Application_ construída com AngularJS que consome uma API escrita em C# usando ASP.NET WebAPI. A API contém dois _endpoints_.
+
+### Endpoints da API
+
+ * **`api/buscar/{dominio}`**: 
+ 
+      Busca informações sobre o domínio (enviado por parâmetro na URL, tanto _inline_ quanto por _query string_.   
+  
+     Exemplo de requisição: **`http://exemplo/api/buscar?dominio=umbler.com`** ou **`http://exemplo/api/buscar/umbler.com/`** (notar a barra no final).
+   
+ * **`api/atualizarcache/{idRegistro}`**:
+
+      Busca as informações do domínio, ignorando o cache interno e atualizando o mesmo.
+
+      Exemplo de requisição: **`http://exemplo/api/atualizarcache?idRegistro=59834f84dc85e94788428ec5`** ou **`http://exemplo/api/buscar/59834f84dc85e94788428ec5`**
+      
+### Retorno da API
+
+Para as duas solicitações a API vai retornar um JSON (ou um XML) com a mesma estrutura do JSON de exemplo abaixo.
+
+```
+{  
+   "Dado": {  
+      "Id": "59834f84dc85e94788428ec5",
+      "NomeDominio": "umbler.com",
+      "DataCriacao": "2013-06-03T23:42:15Z",
+      "DataExpiracao": "2027-06-03T23:42:15Z",
+      "DataAtualizacao": "2017-07-08T19:31:54Z",
+      "NameServers": [  
+         "ns1.dominio.com",
+         "ns1.dominio.com"
+      ],
+      "Emails":[  
+         "alguem@email.com",
+         "outroalguem@email.com"
+      ],
+      "RawInfo": "Uma string gigantesca com quebra de linhas ",
+      "Contatos":[  
+         {  
+            "Nome": "Alguém",
+            "Tipo": "admin",
+            "Organizacao": "ECMA Org",
+            "Fone": "+1 18 6552 4458",
+            "Email": "alguem@email.com",
+            "EnderecoCompleto": "Rua ECMA, 1080. NY, NY. USA."
+         }
+      ],
+      "ExpiracaoCacheInterno": "2017-08-14T03:00:00Z",
+      "Registrado": true,
+      "CacheExpirado": false
+   },
+   "Cacheado": true
+}
+```
+
+### Testes e publicação
 
 Para facilitar os testes, eu mesmo fiz uma publicação dela, usando minha conta de estudante no Azure. Ela pode ser acessada pelo link [umbler-whoisapp.azurewebsites.net](https://umbler-whoisapp.azurewebsites.net).
 
@@ -57,7 +136,7 @@ Após realizar a publicação da aplicação é necessário configurar os parâm
 
 2. Procure pelos pares de chave-valor que contém chaves iniciadas com "Mongo" e altere conforme as configurações do seu servidor MongoDB;
 
-   ```
+   ```xml
    <add key="MongoUrl" value="mongodb://localhost:27017" />
    <add key="MongoDb" value="db" />
    <add key="MongoCollection" value="dominios" />
