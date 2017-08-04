@@ -18,7 +18,8 @@ namespace DesafioWhois.Controllers.Api
     public class BuscarController : ApiController
     {
         private readonly DominiosRepo _repoDominios = new DominiosRepo();
-        
+
+        [Route("api/Buscar/{dominio=dominio}/")]
         public async Task<IHttpActionResult> Get([FromUri] string dominio)
         {
             var registroCacheado = await _repoDominios.BuscarPorDominio(dominio);            
@@ -38,7 +39,7 @@ namespace DesafioWhois.Controllers.Api
             return Ok(new RetornoDominio { Dado = registroCacheado, Cacheado = true });
         }
 
-        [HttpPost, Route("api/AtualizarCache")]
+        [HttpPost, Route("api/AtualizarCache/{idRegistro=idRegistro}")]
         public async Task<IHttpActionResult> AtualizarCache([FromUri] string idRegistro)
         {
             var registro = await _repoDominios.BuscarPorId(idRegistro);
