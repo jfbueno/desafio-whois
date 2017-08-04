@@ -124,7 +124,7 @@ Isso abrirá a janela de publicação.
 
 # 2. Publicação com os arquivos de _deploy_ pré-gerados
 
-Pra facilitar um pouco, gerei os arquivos necessários para publicação e coloquei numa pasta zipada. Esta pasta pode ser baixada [aqui](http://AlgumLink).
+Pra facilitar um pouco, gerei os arquivos necessários para publicação e coloquei numa pasta zipada. Esta pasta pode ser baixada [aqui](https://drive.google.com/file/d/0B5jv5pjdNuIvdHRvcGo2Q1pLR0U/view?usp=sharing).
 
 Para fazer esta publicação, extraia os arquivos em uma pasta qualquer, crie uma aplicação no IIS e em "**_Physical location_**" selecione o caminho onde estão os arquivos extraídos. 
 
